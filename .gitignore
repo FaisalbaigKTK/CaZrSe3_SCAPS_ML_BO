@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# ML model files (large — stored on Zenodo)
+data/results/models/*.pkl
+data/results/*.npy
+
+# SCAPS raw output (large — stored on Zenodo)
+# data/raw/*.iv   ← uncomment if you want to exclude raw iv files
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Test output
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Logs
+*.log

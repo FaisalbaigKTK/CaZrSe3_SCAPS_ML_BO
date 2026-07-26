@@ -1,0 +1,56 @@
+cff-version: 1.2.0
+message: "If you use this software or dataset, please cite it as below."
+type: software
+
+title: "CaZrSe3-SCAPS-ML-BO: Active Learning and Explainable AI Framework for Chalcogenide Perovskite Solar Cell Optimisation"
+
+authors:
+  - family-names: Khattak
+    given-names: Yousaf Hameed
+    orcid: "https://orcid.org/0000-0000-0000-0000"
+    affiliation: "International Islamic University Islamabad, Pakistan"
+  - family-names: Baig
+    given-names: Faisal
+    affiliation: "International Islamic University Islamabad, Pakistan"
+  - family-names: "Marí Soucase"
+    given-names: "Bernabé"
+    affiliation: "Universitat Politècnica de València, Spain"
+
+version: "1.0.0"
+date-released: "2025-07-01"
+license: MIT
+repository-code: "https://github.com/YousafKhattak/CaZrSe3-SCAPS-ML-BO"
+doi: "10.5281/zenodo.XXXXXXX"
+
+abstract: >
+  Complete Python pipeline for SCAPS-1D simulation parsing, machine learning
+  surrogate training (Random Forest, XGBoost, ANN), Gaussian Process Bayesian
+  Optimisation (Matérn 5/2 + Expected Improvement), and SHAP explainability
+  analysis applied to CaZrSe3/CdZnS chalcogenide perovskite solar cells.
+  Achieves 95% reduction in SCAPS evaluations while finding the exact global
+  PCE optimum (10.4927%).
+
+keywords:
+  - chalcogenide perovskite
+  - CaZrSe3
+  - SCAPS-1D
+  - Bayesian optimisation
+  - machine learning
+  - SHAP
+  - photovoltaics
+  - active learning
+  - Gaussian Process
+
+preferred-citation:
+  type: article
+  title: "Active Learning and Explainable Machine Intelligence for Lead-Free Chalcogenide Perovskite Photovoltaics: Gaussian Process Bayesian Optimisation and SHAP Interpretability Applied to CaZrSe3/CdZnS Solar Cells"
+  authors:
+    - family-names: Khattak
+      given-names: Yousaf Hameed
+    - family-names: Baig
+      given-names: Faisal
+    - family-names: "Marí Soucase"
+      given-names: "Bernabé"
+  journal: "[Journal Name]"
+  year: 2025
+  doi: "[paper DOI]"
