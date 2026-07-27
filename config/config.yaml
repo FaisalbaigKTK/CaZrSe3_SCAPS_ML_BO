@@ -1,0 +1,132 @@
+# ═══════════════════════════════════════════════════════════════
+# CaZrSe3 SCAPS-ML-BO Framework — Master Configuration
+# Edit this file to adapt the pipeline to a new material or sweep
+# ═══════════════════════════════════════════════════════════════
+
+# ── Material system ──────────────────────────────────────────────
+absorber:
+  name: "CaZrSe3"
+  bandgap_eV: 1.35
+  sq_limit_pct: 30.4          # Shockley-Queisser limit for Eg=1.35 eV
+  electron_affinity_eV: 3.80
+
+etl:
+  name: "CdZnS"
+  bandgap_eV: 2.80
+  electron_affinity_eV: 4.20
+
+# ── SCAPS simulation conditions ──────────────────────────────────
+scaps:
+  version: "3.3.11"
+  illumination: "AM1.5G"
+  irradiance_W_m2: 1000
+  temperature_K: 300
+  series_resistance: 0         # Ohm cm²
+
+# ── Back contact ─────────────────────────────────────────────────
+back_contact:
+  work_function_eV: 5.10
+  surface_recomb_velocity_cm_s: 1.0e7
+
+# ── Dataset and sweep ────────────────────────────────────────────
+dataset:
+  n_simulations: 12100
+  iv_file: "data/raw/CaZrSe3_sweep_12100.iv"
+  processed_csv: "data/processed/clean_data.csv"
+  results_dir: "data/results"
+
+# Swept parameter ranges (used by step2b for BO bounds)
+sweep_params:
+  CaZrSe3_thickness_um:
+    min: 0.10
+    max: 1.50
+    n_points: 11
+    scale: "linear"
+
+  CaZrSe3_shallow_acceptor_density_1percm3:
+    min: 1.0e13
+    max: 1.0e18
+    n_points: 11
+    scale: "log"
+
+  CdZnS_thickness_um:
+    min: 0.02
+    max: 0.20
+    n_points: 10
+    scale: "linear"
+
+  CdZnS_shallow_donor_density_1percm3:
+    min: 1.0e15
+    max: 1.0e18
+    n_points: 10
+    scale: "log"
+
+# Fixed baseline parameters (not swept)
+fixed_params:
+  absorber_defect_density_cm3: 1.0e14
+  etl_defect_density_cm3: 1.0e15
+  interface_defect_density_cm2: 1.0e12
+
+# ── ML training ──────────────────────────────────────────────────
+ml:
+  test_size: 0.20
+  random_state: 42
+  cv_folds: 5
+
+  random_forest:
+    n_estimators: 500
+    min_samples_leaf: 2
+    n_jobs: -1
+
+  xgboost:
+    n_estimators: 500
+    max_depth: 6
+    learning_rate: 0.05
+    subsample: 0.8
+    colsample_bytree: 0.8
+
+  ann:
+    hidden_layers: [128, 64]
+    activation: "relu"
+    max_iter: 1000
+    early_stopping: true
+
+# ── Bayesian optimisation ────────────────────────────────────────
+bayesian_opt:
+  n_init: 403               # Latin Hypercube initial sample
+  n_iter: 201               # Sequential BO iterations
+  acquisition: "EI"         # Expected Improvement
+  xi: 0.01                  # Exploration parameter
+  kernel: "matern52"        # GP kernel
+  noise: 1.0e-4             # GP observation noise
+  refit_hyperparams_every: 20
+  n_restarts_acquisition: 20
+  random_state: 42
+
+# ── SHAP analysis ────────────────────────────────────────────────
+shap:
+  n_background: 500
+  n_interaction_samples: 2000   # For 2nd-order interaction values
+  top_features_dependence: 2
+
+# ── Output ───────────────────────────────────────────────────────
+output:
+  figures_dir: "figures"
+  figure_dpi: 300
+  figure_format: "png"
+  models_dir: "data/results/models"
+
+# ── Targets (what ML predicts) ───────────────────────────────────
+targets:
+  - name: "PCE_pct"
+    label: "PCE (%)"
+    unit: "%"
+  - name: "Voc_V"
+    label: "Voc (V)"
+    unit: "V"
+  - name: "Jsc_mA"
+    label: "Jsc (mA/cm²)"
+    unit: "mA/cm²"
+  - name: "FF_pct"
+    label: "FF (%)"
+    unit: "%"
